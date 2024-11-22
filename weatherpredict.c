@@ -12,8 +12,8 @@ typedef struct {
 int read_csv(const char *filename, WeatherData *data, int max_records) {
     FILE *file = fopen(filename, "r");
     if (!file) {
-        printf("\nError: Could not open file %s\n", filename);
-        return -1;
+        printf("\nError: Could not open file %s\n", filename); //!file means file not found basically
+        return -1; // it basically means failure 
     }
     int count = 0;
     char line[100];
@@ -61,12 +61,12 @@ void save_prediction(const char *filename, int future_day, float prediction) {
 
 // Main function
 int main() {
-    WeatherData data[100];
+    WeatherData data[200];
     int count = 0, future_day;
-    char input_file[256], output_file[256];
+    char input_file[200], output_file[200];
     float prediction;
 
-    while (1) {
+    while (1) { // it is in an infinite loop so whenever there is failure, the main menu reappears
         printf("\nWeather Prediction Menu\n");
         printf("1.Load Weather Data\n");
         printf("2.Predict Temperature\n");
@@ -77,7 +77,7 @@ int main() {
         scanf("%d", &choice);
 
         switch (choice) {
-            case 1:
+            case 1: //loading data
                 printf("Enter the input CSV file path: ");
                 scanf("%s", input_file);
                 count = read_csv(input_file, data, 100);
@@ -86,7 +86,7 @@ int main() {
                 }
                 break;
 
-            case 2:
+            case 2: //prediction
                 if (count < 1) {
                     printf("No data loaded. Please load data first.\n");
                     break;
@@ -98,7 +98,7 @@ int main() {
                 printf("Predicted temperature for day %d: %.2f°C\n", future_day, prediction);
                 break;
 
-            case 3:
+            case 3: //saving prediction
                 if (prediction == 0) {
                     printf("No prediction available. Please make a prediction first.\n");
                     break;
@@ -108,9 +108,10 @@ int main() {
                 save_prediction(output_file, future_day, prediction);
                 break;
 
-            case 4:
+            case 4: //exit
                 printf("Exiting the program.\n");
-                return 0;
+                exit(1);
+                return 0; //ends the program
 
             default:
                 printf("Invalid choice. Please try again.\n");
