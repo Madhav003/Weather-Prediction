@@ -33,7 +33,7 @@ float predict_temperature(const WeatherData *data, int count, int future_day) {
         return 0;
     }
 
-    // Calculate the average daily temperature change
+    // Calculate the average daily temperature change or mean
     float total_change = 0;
     for (int i = 1; i < count; i++) {
         total_change += data[i].temperature - data[i - 1].temperature;
@@ -43,7 +43,7 @@ float predict_temperature(const WeatherData *data, int count, int future_day) {
     // Predict future temperature
     int last_day = data[count - 1].day;
     float last_temp = data[count - 1].temperature;
-    return last_temp + avg_change * (future_day - last_day);
+    return last_temp + avg_change * (future_day - last_day); // predicted temperature = last temperature + (average daily change * days to predict)
 }
 
 // Function to save prediction to CSV
