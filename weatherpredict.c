@@ -27,7 +27,7 @@ int read_csv(const char *filename, WeatherData *data, int max_records) {
 }
 
 // Function to predict temperature
-float predict_temperature(const WeatherData *data, int count, int future_day) {
+float predict(const WeatherData *data, int count, int future_day) {
     if (count < 2) {
         printf("Not enough data to make a prediction.\n");
         return 0;
@@ -47,7 +47,7 @@ float predict_temperature(const WeatherData *data, int count, int future_day) {
 }
 
 // Function to save prediction to CSV
-void save_prediction(const char *filename, int future_day, float prediction) {
+void save(const char *filename, int future_day, float prediction) {
     FILE *file = fopen(filename, "w");
     if (!file) {
         printf("Error: Could not open file %s for writing.\n", filename);
@@ -93,9 +93,10 @@ int main() {
                 }
                 printf("Enter the day number to predict temperature for: ");
                 scanf("%d", &future_day);
+                int display = future_day;
                 future_day = future_day + count; // to get predection of afther the last day
-                prediction = predict_temperature(data, count, future_day);
-                printf("Predicted temperature for day %d: %.2f°C\n", future_day, prediction);
+                prediction = predict(data, count, future_day);
+                printf("Predicted temperature for day %d: %.2f°C\n", display, prediction);
                 break;
 
             case 3: //saving prediction
@@ -105,7 +106,7 @@ int main() {
                 }
                 printf("Enter the output CSV file path: ");
                 scanf("%s", output_file);
-                save_prediction(output_file, future_day, prediction);
+                save(output_file, future_day, prediction);
                 break;
 
             case 4: //exit
