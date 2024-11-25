@@ -33,7 +33,7 @@ float predict(const WeatherData *data, int count, int future_day) {
         return 0;
     }
 
-    // Calculate the average daily temperature change or mean
+    // Calculate the average daily temperature change (or mean)
     float total_change = 0;
     for (int i = 1; i < count; i++) {
         total_change += data[i].temperature - data[i - 1].temperature;
